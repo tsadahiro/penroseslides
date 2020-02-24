@@ -1,6 +1,5 @@
 Vue.component('penroseexp',{
-    //template: '<svg width=800 height=400><circle v-for="(T,i) in polygons[0]" :cx="T.x" :cy="T.y" r="2"></circle></svg>',
-    template: '<div><button @click="expand()">expand</button><button @click="subdivision()">divide</button><input type="range" v-model="exp" min=20 max=200><br/><svg width=800 height=400><tile v-for="(T,i) in polygons" :points="T.str" :col="T.col"></tile></svg></div>',
+    template: '<div><button v-if="!finished" @click="expand()">expand</button><button v-if="!finished" @click="subdivision()">divide</button><input type="range" v-model="exp" min=20 max=200><button v-if="!finished" @click="unify()">unify</button><br/><svg width=800 height=400><tile  v-for="(T,i) in polygons" :points="T.str" :col="T.col" :key="i"></tile></svg><br/><div>拡大細分回数：{{ndiv}}</div></div>',
     data(){
 	return {A:[[[0,0,0,0,0],[1,0,0,0,0],[0,1,0,0,0]],
 		   [[0,0,0,0,0],[0,0,1,0,0],[0,1,0,0,0]],
@@ -17,7 +16,9 @@ Vue.component('penroseexp',{
 		pif: 3.14159/5,
 		exp:100,
 		centx:400,
-		centy:200
+		centy:200,
+		ndiv:0,
+		finished:false,
 	       }
     },
     computed:{
@@ -106,6 +107,55 @@ Vue.component('penroseexp',{
 	    }
 	    this.A = nA;
 	    this.B = nB;
+	    console.log(nA.length, nB.length);
+	    this.ndiv += 1;
+	},
+	canonical(x){
+	    let y = [];
+	    for (let i=0; i < 4; i++){
+		y.push(x[i]);
+	    }
+	    for (let i=0; i < 4; i++){
+		if (i%2==0){
+		    y[i] -= x[4];
+		}
+		else{
+		    y[i] += x[4];
+		}
+	    }
+	    return y;
+	},
+	unify(){
+	    let incAList = {};
+	    let matchedA = [];
+	    for (let t=0; t<this.A.length;t++){
+		for (let s=t+1; s < this.A.length; s++){
+		    let t1 = this.canonical(this.A[t][1]).toString();
+		    let t2 = this.canonical(this.A[t][2]).toString();
+		    let s1 = this.canonical(this.A[s][1]).toString();
+		    let s2 = this.canonical(this.A[s][2]).toString();
+		    //console.log([t1,t2, s1, s2]);
+		    if (t1==s1 && t2==s2){
+			console.log([t,s]);
+			matchedA.push([this.A[t][0],this.A[t][1],this.A[s][0],this.A[t][2]]);
+		    }
+		}
+	    }
+	    let matchedB = [];
+	    for (let t=0; t<this.B.length;t++){
+    		for (let s=t+1; s < this.B.length; s++){
+    		    let t1 = this.canonical(this.B[t][0]).toString();
+    		    let t2 = this.canonical(this.B[t][1]).toString();
+    		    let s1 = this.canonical(this.B[s][0]).toString();
+    		    let s2 = this.canonical(this.B[s][1]).toString();
+    		    if (t1==s1 && t2==s2){
+    			matchedB.push([this.B[t][0],this.B[t][2],this.B[t][1],this.B[s][2]]);
+    		    }
+    		}
+	    }
+	    this.A = matchedA;
+	    this.B = matchedB;
+	    this.finished = true;
 	},
 	polygonString(T){
 	    let pts = "";
@@ -128,27 +178,16 @@ Vue.component('penroseexp',{
 
 Vue.component('tile',{
     props: ['points', 'col','id'],
-    template: '<polygon v-bind:points="points" v-bind:style="styles"></polygon>',
+    template: '<polygon class="tile" v-bind:points="points" v-bind:style="styles" :fill="col"></polygon>',
     data: function(){
 	return {
 	    styles:{
-		fill: this.col,
 		stroke: "black",
 		opacity: 0.3
 	    }
 	};
     },
     methods:{
-	//hover: function(){
-	//    this.$emit("hovered",this.id);
-	//    this.styles.opacity=1;
-	//    return;
-	//},
-	//hout: function(){
-	//    this.$emit("hout",this.id);
-	//    this.styles.opacity=0.3;
-	//    return;
-	//}
     }
 })
 

@@ -3,9 +3,19 @@
     <title> Lightsout </title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_HTML"></script>
+    <style type="text/css" src="transition.css"> </style>
   </head>
 
   <body>
+    <style>
+      .tile {
+      transition: transform 1s ease;
+      will-change: transform;
+      }
+      .slide-fade-enter-active {
+      transition: all .3s ease;
+      }
+    </style>
     <div id="penroseexp"></div>
     <script src="penroseexp.js"></script>
   </body>
