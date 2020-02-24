@@ -1,0 +1,190 @@
+---
+title: "ペンローズタイル張り上の<br/>ライツアウトパズル"
+author: Yumi KATAMATA
+date: "2020-01-31"
+output:
+  revealjs::revealjs_presentation:
+    pandoc_args: [
+      '--from', 'markdown-auto_identifiers'
+      ]
+    theme: beige
+    center: true
+---
+
+<style type="text/css">
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+</style>
+
+
+# ライツアウトパズル
+
+## ルール
+
+>- タイルがライトになっている。
+>- クリックするとそのタイルと隣接するタイルのon-offが反転
+>- 全部offにしたら完成
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><div alighn="center"><div id="lightsout"></div></div><script src="lightsout.js"></script>
+
+# 解法
+
+## 有限体${\mathbb F}_2$
+
+>- 足し算
+<table border="1">
+<tr>
+<td>$+$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$0$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$1$</td>
+<td>${\color{red}0}$</td>
+</tr>
+</table>
+<br/>
+$$
+0 + 1 = 1,~~~ 1 + 1 = 0
+$$
+
+<br/>
+
+>- かけ算
+<table border="1">
+<tr>
+<td>$\times$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$0$</td>
+<td>$0$</td>
+<td>$0$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+</table>
+
+>- 加減乗除が可能
+
+## ${\mathbb F}_2$によるon-offの表現
+
+$1:$ ライトがオン
+
+$0:$ ライトがオフ
+
+<br/>
+$$
+0 + 1 = 1,~~~ 1 + 1 = 0
+$$
+
+$1$を足すことはon-off反転
+
+タイルが$n$枚であれば、${\mathbb F}_2$上の$n$次元ベクトル
+で表現できる。
+
+## 例
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id="lightsout2x2">
+</div>
+<script src="lightsout2x2.js"></script>
+
+## 連立方程式 {class="left"}
+
+>- ${\mathbf S}:$ on-offの初期状態を表すベクトル
+
+>- ${\mathbf v}_i:$ タイル$i$を押すことによる変化を表すベクトル
+
+>- $x_i:$ タイル$i$を押すか押さないか
+$$
+x_i = 
+\begin{cases}
+1 & 押す\\
+0 & 押さない
+\end{cases}
+$$
+
+>- 連立方程式:
+$${\mathbf S} + x_1{\mathbf v}_1 + x_2{\mathbf v}_2 + \cdots + x_n{\mathbf v}_n=0$$
+<br/>
+$${x_1{\mathbf v}_1 + x_2{\mathbf v}_2 + \cdots + x_n{\mathbf v}_n=-{\mathbf S}}$$
+
+
+## ラプラシアン
+
+>- 行列
+$$
+L = ({\mathbf v}_1, {\mathbf v}_2, \ldots, {\mathbf v}_n)
+$$
+をラプラシアンと呼ぶ。
+
+>- 連立方程式は
+$$
+L{\mathbf x} = {\mathbf S}
+$$
+と表現できる。$\Rightarrow$掃き出し法で解ける。
+
+>- 
+$${\rm corank}L = n- {\rm rank}{L}$$
+が可解性や解の個数を決定する。
+
+# ペンローズタイル張り
+
+ペンロースタイル張り上のライツアウトは
+どんなに検索しても見つからなかった。
+
+## ペンローズタイル張りとは
+
+>- 準周期性
+>- 5回対称性
+>- 5次元空間からの2次元平面への射影
+
+## Let's Play 
+
+# 大きな盤面での結果
+
+## Sutnerの定理
+
+K.Sutnerは1989年にどのようなライツアウトパズルも
+すべてのライトが点灯している状態を初期状態とする
+とき、可解であることを示した。
+
+以下ではペンローズタイル張り上のライツアウトパズル
+について全点灯から全消灯するためにクリックが
+必用となるタイルを計算した結果
+
+
+## 拡大回数1
+
+## 拡大回数2
+
+## 拡大回数3
+
+## 拡大回数4
+
+## 拡大回数5
+
+## 拡大回数6
+
+## 拡大回数7
+
+
+

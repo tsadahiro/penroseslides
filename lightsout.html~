@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title> Lightsout </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_HTML"></script>
+  </head>
+
+  <body>
+    <div id="lightsout2x2"></div>
+    <div v-html="output" id="editor-output"></div>
+    <script src="lightsout2x2.js"></script>
+  </body>
+</html>

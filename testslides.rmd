@@ -1,0 +1,25 @@
+---
+title: "ペンローズタイル張り上の<br/>ライツアウトパズル"
+author: Yumi KATAMATA
+date: "2020-01-31"
+output:
+  revealjs::revealjs_presentation:
+    pandoc_args: [
+      '--from', 'markdown-auto_identifiers'
+    ]
+    theme: beige
+---
+
+# １トピック目
+
+## 1-1
+
+abcdefg
+
+## 1-2
+
+>- あいうおえ
+>- かきくけこ
+
+# ２トピック目
+
